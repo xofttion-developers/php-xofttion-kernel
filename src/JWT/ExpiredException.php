@@ -4,7 +4,6 @@ namespace Xofttion\Kernel\JWT;
 
 use UnexpectedValueException;
 use stdClass;
-use Exception;
 
 class ExpiredException extends UnexpectedValueException {
 
@@ -22,9 +21,8 @@ class ExpiredException extends UnexpectedValueException {
      * 
      * @param string $message
      * @param stdClass|null $payload
-     * @return Exception
      */
-    public function __construct(string $message, ?stdClass $payload = null): Exception {
+    public function __construct(string $message, ?stdClass $payload = null) {
         parent::__construct($message, 0, null); $this->setPayload($payload);
     }
     

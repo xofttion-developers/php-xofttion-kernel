@@ -3,10 +3,6 @@
     "type": "library",
     "license": "MIT",
     "description": "Librería que contiene métodos para complementar las funciones de las otras librerias de Xofttion",
-    "keywords": [
-        "xofttion",
-        "kernel"
-    ],
     "authors": [
         {
             "name": "Daniel Andres Castillo Pedroza",

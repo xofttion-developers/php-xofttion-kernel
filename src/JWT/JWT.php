@@ -104,7 +104,7 @@ class JWT {
         }
 
         if (isset($payload->exp) && ($timestamp - static::$leeway) >= $payload->exp) {
-            throw new ExpiredException('Expired token', $payload);
+            throw new ExpiredException('Expired token');
         }
 
         return $payload; // Retornando Payload del Token generado
