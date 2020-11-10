@@ -1,5 +1,17 @@
 <?php
 
+if (!function_exists("is_defined")) {
+    function is_defined($var): bool {
+        return !is_null($var);
+    }
+}
+
+if (!function_exists("array_is_empty")) {
+    function array_is_empty(array $array): bool {
+        return count($array) == 0;
+    }
+}
+
 if (!function_exists("is_array_json")) {
     function is_array_json(array $array): bool {
         $keys = array_keys($array); // Extrayendo claves 

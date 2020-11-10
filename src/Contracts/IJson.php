@@ -6,9 +6,9 @@ use IteratorAggregate;
 use Countable;
 use JsonSerializable;
 
-interface IDataDictionary extends IteratorAggregate, Countable, JsonSerializable {
+interface IJson extends IteratorAggregate, Countable, JsonSerializable {
     
-    // Métodos de la interfaz IDataDictionary
+    // Métodos de la interfaz IJson
     
     /**
      * 
@@ -23,6 +23,14 @@ interface IDataDictionary extends IteratorAggregate, Countable, JsonSerializable
      * @return void
      */
     public function attach(string $key, $value): void;
+    
+    /**
+     * 
+     * @param string $key
+     * @param float $value
+     * @return void
+     */
+    public function sum(string $key, float $value): void;
     
     /**
      * 
@@ -56,4 +64,10 @@ interface IDataDictionary extends IteratorAggregate, Countable, JsonSerializable
      * @return void
      */
     public function clear(): void;
+    
+    /**
+     * 
+     * @return array
+     */
+    public function toArray(): array;
 }
