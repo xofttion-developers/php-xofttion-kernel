@@ -16,7 +16,7 @@ class DataTransfer implements IDataTransfer {
     
     // Constructor de la clase DataTransfer
     
-    public function __construct($data = null) {
+    public function __construct(?array $data = null) {
         if (!is_null($data)) {
             $this->map($data); // Mapeando datos
         }
@@ -75,8 +75,12 @@ class DataTransfer implements IDataTransfer {
         $array = []; // Formato tradicional de PHP
         
         foreach ($data as $item) {
-            array_push($array, (is_array_json($item)) ? new static($item) : $item);
-        } // Cargando items en el array
+            if (is_array($item)) {
+                array_push($array, (is_array_json($item)) ? new static($item) : $item);
+            } else {
+                array_push($array, $item); // Cargando value normal
+            }
+        } 
         
         return $array; // Retornando datos en array
     }
