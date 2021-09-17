@@ -4,8 +4,9 @@ namespace Xofttion\Kernel;
 
 use Xofttion\Kernel\Contracts\IDataTransfer;
 
-class DataTransfer implements IDataTransfer {
-    
+class DataTransfer implements IDataTransfer
+{
+
     // Atributos de la clase DataTransfer
 
     /**
@@ -13,120 +14,143 @@ class DataTransfer implements IDataTransfer {
      * @var array 
      */
     private $data = [];
-    
+
     // Constructor de la clase DataTransfer
-    
-    public function __construct($data = null) {
-        if (!is_null($data)) {
-            $this->map($data); // Mapeando datos
+
+    public function __construct(?array $data = null)
+    {
+        if (is_defined($data)) {
+            $this->map($data);
         }
     }
-    
+
     // Métodos sobrescritos de la interfaz IDataTransfer
 
-    public function map(array $data): bool {
+    public function map(array $data): bool
+    {
         if (is_array_json($data)) {
             foreach (array_keys($data) as $key) {
                 if (is_array($data[$key])) {
                     $this->mapArrayJson($key, $data[$key]);
-                } else {
+                }
+                else {
                     $this[$key] = $data[$key];
                 }
             }
-            
-            return true; // Mapeo de los datos en el objeto
+
+            return true;
         }
-        
-        return false; // No se puede mapear objeto establecido
+
+        return false;
     }
 
-    public function toArray(): array {      
-        return $this->jsonSerialize(); // Retornando objeto como Array
+    public function toArray(): array
+    {
+        return $this->jsonSerialize();
     }
-    
+
     // Métodos sobrescritos de la interfaz JsonSerializable
-    
-    public function jsonSerialize() {
-        $json = []; // JSON para serialización de objeto
-        
+
+    public function jsonSerialize()
+    {
+        $json = [];
+
         foreach (array_keys($this->data) as $key) {
-            $value = $this->data[$key]; // Valor de clave
-            
+            $value = $this->data[$key];
+
             if ($value instanceof IDataTransfer) {
                 $json[$key] = $value->toArray();
-            } else if (is_array($value)) {
+            }
+            else if (is_array($value)) {
                 $json[$key] = $this->jsonToArray($value);
-            } else {
-                $json[$key] = $value; // Es un dato generico
+            }
+            else {
+                $json[$key] = $value;
             }
         }
-        
-        return $json; // Datos en formato JSON serializado
+
+        return $json;
     }
-    
+
     // Métodos de la clase DataTransfer
-    
+
     /**
      * 
      * @param array $data
      * @return array
      */
-    public static function convertArray(array $data): array {
-        $array = []; // Formato tradicional de PHP
-        
-        foreach ($data as $item) {
-            array_push($array, (is_array_json($item)) ? new static($item) : $item);
-        } // Cargando items en el array
-        
-        return $array; // Retornando datos en array
+    public static function convertArray(array $data): array
+    {
+        $array = []; // Array tradicional
+
+        foreach ($data as $element) {
+            if (is_array($element)) {
+                $array[] = (is_array_json($element)) ? new static ($element) : $element;
+            }
+            else {
+                $array[] = $element;
+            }
+        }
+
+        return $array;
     }
 
     // Métodos mágicos sobrescritos de PHP
-    
-    public function &__get($key) {
+
+    public function &__get($key)
+    {
         return $this->data[$key];
     }
-    
-    public function __set($key, $value) {
+
+    public function __set($key, $value)
+    {
         $this->data[$key] = $value;
     }
-    
-    public function __isset($key) {
+
+    public function __isset($key)
+    {
         return isset($this->data[$key]);
     }
-    
-    public function __unset($key) {
+
+    public function __unset($key)
+    {
         unset($this->data[$key]);
     }
-    
-    public function __toString() {
+
+    public function __toString()
+    {
         return json_encode($this->jsonSerialize());
     }
-    
+
     // Métodos sobrescritos de la interfaz ArrayAccess
-    
-    public function offsetExists($offset): bool {
+
+    public function offsetExists($offset): bool
+    {
         return isset($this->data[$offset]);
     }
-    
-    public function offsetGet($offset) {
+
+    public function offsetGet($offset)
+    {
         return $this->offsetExists($offset) ? $this->data[$offset] : null;
     }
-    
-    public function offsetSet($offset, $value): void {
+
+    public function offsetSet($offset, $value): void
+    {
         if (is_null($offset)) {
             $this->data[] = $value;
-        } else {
+        }
+        else {
             $this->data[$offset] = $value;
         }
     }
-    
-    public function offsetUnset($offset): void {
-        if ($this->offsetExists($offset)) { 
-            unset($this->data[$offset]); // Array
+
+    public function offsetUnset($offset): void
+    {
+        if ($this->offsetExists($offset)) {
+            unset($this->data[$offset]);
         }
     }
-    
+
     // Métodos operacionales de la clase DataTransfer
 
     /**
@@ -135,41 +159,45 @@ class DataTransfer implements IDataTransfer {
      * @param mixed $data
      * @return void
      */
-    private function mapArrayJson(string $key, $data): void {
+    private function mapArrayJson(string $key, $data): void
+    {
         if (is_array_json($data)) {
-            $this[$key] = new static($data); // Objeto es JSON
-        } else {
-            $array = []; // Nuevo array de datos del array indexado
-            
-            foreach ($data as $item) {
-                array_push($array, $this->mapItemJson($item));
+            $this[$key] = new static ($data);
+        }
+        else {
+            $array = []; // Array de datos
+
+            foreach ($data as $element) {
+                array_push($array, $this->mapItemJson($element));
             }
-            
-            $this[$key] = $array; // Asignando datos generado
+
+            $this[$key] = $array;
         }
     }
-    
+
     /**
      * 
-     * @param mixed $item
+     * @param mixed $element
      * @return mixed
      */
-    private function mapItemJson($item) {
-        return (is_array($item)) ? new static($item) : $item;
+    private function mapItemJson($element)
+    {
+        return (is_array($element)) ? new static ($element) : $element;
     }
-    
+
     /**
      * 
      * @param array $data
      * @return array
      */
-    private function jsonToArray(array $data): array {
-        $array = []; // Formato tradicional de PHP
-        
-        foreach ($data as $item) {
-            array_push($array, ($item instanceof IDataTransfer) ? $item->toArray() : $item);
-        } // Cargando objetos en el array
-        
-        return $array; // Retornando datos del array
+    private function jsonToArray(array $data): array
+    {
+        $array = []; // Array tradicional
+
+        foreach ($data as $element) {
+            $array[] = ($element instanceof IDataTransfer) ? $element->toArray() : $element;
+        }
+
+        return $array;
     }
 }

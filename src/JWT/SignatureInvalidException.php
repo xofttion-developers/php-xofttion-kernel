@@ -4,6 +4,7 @@ namespace Xofttion\Kernel\JWT;
 
 use UnexpectedValueException;
 
-class SignatureInvalidException extends UnexpectedValueException {
+class SignatureInvalidException extends UnexpectedValueException
+{
 
 }

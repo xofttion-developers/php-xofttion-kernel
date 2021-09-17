@@ -2,16 +2,17 @@
 
 namespace Xofttion\Kernel\Contracts;
 
-interface IDataStorage {
-    
+interface IDataStorage
+{
+
     // Métodos de la interfaz IDataStorage
-    
+
     /**
      * 
      * @return bool
      */
     public function isEmpty(): bool;
-    
+
     /**
      * @return int
      */
@@ -19,46 +20,46 @@ interface IDataStorage {
 
     /**
      * 
-     * @param object $object
-     * @param object $data
+     * @param mixed $object
+     * @param mixed $data
      * @return void
      */
-    public function attach($object, $data = null); 
-    
+    public function attach($object, $data = null);
+
     /**
      * 
-     * @param object $object
+     * @param mixed $object
      * @return bool
      */
     public function contains($object);
-    
+
     /**
      * 
-     * @param object $object
-     * @return object
+     * @param mixed $object
+     * @return mixed
      */
     public function getValue($object);
-    
+
     /**
      * 
-     * @param object $object
+     * @param mixed $object
      * @return string
      */
     public function getHash($object);
-    
+
     /**
      * 
      * @return array
      */
     public function values(): array;
-    
+
     /**
      * 
-     * @param object $object
+     * @param mixed $object
      * @return void
      */
     public function detach($object);
-    
+
     /**
      * 
      * @return void
