@@ -3,32 +3,36 @@
 namespace Xofttion\Kernel\Structs;
 
 use SplObjectStorage;
-
 use Xofttion\Kernel\Contracts\IDataStorage;
 
-class DataStorage extends SplObjectStorage implements IDataStorage {
-    
+class DataStorage extends SplObjectStorage implements IDataStorage
+{
+
     // Métodos sobrescritos de la interfaz IDataStorage
 
-    public function isEmpty(): bool {
+    public function isEmpty(): bool
+    {
         return !($this->count() > 0);
     }
 
-    public function getValue($object) {
+    public function getValue($object)
+    {
         return $this[$object];
     }
 
-    public function values(): array {
-        $values = []; // Array para valores del almacén
-        
+    public function values(): array
+    {
+        $values = []; // Array del almacén
+
         foreach ($this as $key) {
-            array_push($values, $this->getValue($key));
-        } // Recorriendo almacén de datos
-        
-        return $values; // Retornando array de valores
+            $values[] = $this->getValue($key);
+        }
+
+        return $values;
     }
-    
-    public function clear() {
+
+    public function clear()
+    {
         $this->removeAll($this);
     }
 }

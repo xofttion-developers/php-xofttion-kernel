@@ -5,10 +5,11 @@ namespace Xofttion\Kernel\Contracts;
 use ArrayAccess;
 use JsonSerializable;
 
-interface IDataTransfer extends ArrayAccess, JsonSerializable {
-    
+interface IDataTransfer extends ArrayAccess, JsonSerializable
+{
+
     // Métodos de la interfaz IDataTransfer
-    
+
     /**
      * 
      * @param array $data
