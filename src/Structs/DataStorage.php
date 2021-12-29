@@ -7,12 +7,11 @@ use Xofttion\Kernel\Contracts\IDataStorage;
 
 class DataStorage extends SplObjectStorage implements IDataStorage
 {
-
-    // Métodos sobrescritos de la interfaz IDataStorage
+    // Métodos de la clase DataStorage
 
     public function isEmpty(): bool
     {
-        return !($this->count() > 0);
+        return $this->count() == 0;
     }
 
     public function getValue($object)
@@ -22,7 +21,7 @@ class DataStorage extends SplObjectStorage implements IDataStorage
 
     public function values(): array
     {
-        $values = []; // Array del almacén
+        $values = [];
 
         foreach ($this as $key) {
             $values[] = $this->getValue($key);

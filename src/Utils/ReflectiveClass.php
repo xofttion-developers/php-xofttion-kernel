@@ -6,15 +6,8 @@ use ReflectionClass;
 
 class ReflectiveClass
 {
+    // Métodos de la clase ReflectiveClass
 
-    /**
-     * 
-     * @param mixed $object
-     * @param string $propertyName
-     * @param mixed $value
-     * @param ReflectionClass|null $reflection
-     * @return bool
-     */
     public function setProperty($object, string $propertyName, $value, ?ReflectionClass $reflection = null): bool
     {
         if (is_null($reflection)) {
@@ -36,15 +29,6 @@ class ReflectiveClass
         return true;
     }
 
-
-    /**
-     * 
-     * @param mixed $object
-     * @param string $methodName
-     * @param mixed $value
-     * @param ReflectionClass|null $reflection
-     * @return bool
-     */
     public function setMethod($object, string $methodName, $value, ?ReflectionClass $reflection = null): bool
     {
         if (is_null($reflection)) {
@@ -66,13 +50,6 @@ class ReflectiveClass
         return true;
     }
 
-    /**
-     * 
-     * @param mixed $object
-     * @param string $propertyName
-     * @param ReflectionClass|null $reflection
-     * @return mixed
-     */
     public function getProperty($object, string $propertyName, ?ReflectionClass $reflection = null)
     {
         if (is_null($reflection)) {
@@ -92,13 +69,6 @@ class ReflectiveClass
         return $propertyAccessor->getValue($object);
     }
 
-    /**
-     * 
-     * @param mixed $object
-     * @param string $methodName
-     * @param ReflectionClass|null $reflection
-     * @return mixed
-     */
     public function getMethod($object, string $methodName, ?ReflectionClass $reflection = null)
     {
         if (is_null($reflection)) {

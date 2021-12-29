@@ -6,12 +6,11 @@ use Xofttion\Kernel\Contracts\IDataTransfer;
 
 class DataTransfer implements IDataTransfer
 {
-
     // Atributos de la clase DataTransfer
 
     /**
      *
-     * @var array 
+     * @var array
      */
     private $data = [];
 
@@ -28,20 +27,19 @@ class DataTransfer implements IDataTransfer
 
     public function map(array $data): bool
     {
-        if (is_array_json($data)) {
-            foreach (array_keys($data) as $key) {
-                if (is_array($data[$key])) {
-                    $this->mapArrayJson($key, $data[$key]);
-                }
-                else {
-                    $this[$key] = $data[$key];
-                }
-            }
-
-            return true;
+        if (!is_array_json($data)) {
+            return false;
         }
 
-        return false;
+        foreach (array_keys($data) as $key) {
+            if (is_array($data[$key])) {
+                $this->mapArrayJson($key, $data[$key]);
+            } else {
+                $this[$key] = $data[$key];
+            }
+        }
+
+        return true;
     }
 
     public function toArray(): array
@@ -60,11 +58,9 @@ class DataTransfer implements IDataTransfer
 
             if ($value instanceof IDataTransfer) {
                 $json[$key] = $value->toArray();
-            }
-            else if (is_array($value)) {
+            } elseif (is_array($value)) {
                 $json[$key] = $this->jsonToArray($value);
-            }
-            else {
+            } else {
                 $json[$key] = $value;
             }
         }
@@ -75,19 +71,18 @@ class DataTransfer implements IDataTransfer
     // Métodos de la clase DataTransfer
 
     /**
-     * 
+     *
      * @param array $data
      * @return array
      */
     public static function convertArray(array $data): array
     {
-        $array = []; // Array tradicional
+        $array = [];
 
         foreach ($data as $element) {
             if (is_array($element)) {
-                $array[] = (is_array_json($element)) ? new static ($element) : $element;
-            }
-            else {
+                $array[] = (is_array_json($element)) ? new static($element) : $element;
+            } else {
                 $array[] = $element;
             }
         }
@@ -138,8 +133,7 @@ class DataTransfer implements IDataTransfer
     {
         if (is_null($offset)) {
             $this->data[] = $value;
-        }
-        else {
+        } else {
             $this->data[$offset] = $value;
         }
     }
@@ -154,7 +148,7 @@ class DataTransfer implements IDataTransfer
     // Métodos operacionales de la clase DataTransfer
 
     /**
-     * 
+     *
      * @param string $key
      * @param mixed $data
      * @return void
@@ -162,10 +156,9 @@ class DataTransfer implements IDataTransfer
     private function mapArrayJson(string $key, $data): void
     {
         if (is_array_json($data)) {
-            $this[$key] = new static ($data);
-        }
-        else {
-            $array = []; // Array de datos
+            $this[$key] = new static($data);
+        } else {
+            $array = [];
 
             foreach ($data as $element) {
                 array_push($array, $this->mapItemJson($element));
@@ -176,26 +169,30 @@ class DataTransfer implements IDataTransfer
     }
 
     /**
-     * 
+     *
      * @param mixed $element
      * @return mixed
      */
     private function mapItemJson($element)
     {
-        return (is_array($element)) ? new static ($element) : $element;
+        return (is_array($element)) ? new static($element) : $element;
     }
 
     /**
-     * 
+     *
      * @param array $data
      * @return array
      */
     private function jsonToArray(array $data): array
     {
-        $array = []; // Array tradicional
+        $array = [];
 
         foreach ($data as $element) {
-            $array[] = ($element instanceof IDataTransfer) ? $element->toArray() : $element;
+            if ($element instanceof IDataTransfer) {
+                $array[] = $element->toArray();
+            } else {
+                $array[] = $element;
+            }
         }
 
         return $array;
