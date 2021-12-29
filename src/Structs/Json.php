@@ -11,18 +11,22 @@ class Json implements IJson
 
     private $data = [];
 
+    private $readonly;
+
     // Constructor de la clase Json
 
-    public function __construct(?array $data = null)
+    public function __construct(?array $data = null, bool $readonly = true)
     {
+        $this->readonly = $readonly;
+
         if (is_defined($data)) {
             $this->map($data);
         }
     }
 
-    // Métodos sobrescritos de la interfaz IJson
+    // Métodos de la clase Json
 
-    public function map(array $data): bool
+    private function map(array $data): bool
     {
         if (!is_array_json($data)) {
             return false;
@@ -36,6 +40,8 @@ class Json implements IJson
 
         return true;
     }
+
+    // Métodos sobrescritos de la interfaz IJson
 
     public function toArray(): array
     {
@@ -98,7 +104,9 @@ class Json implements IJson
 
     public function __set($key, $value)
     {
-        $this->data[$key] = $value;
+        if (!$this->readonly) {
+            $this->data[$key] = $value;
+        }
     }
 
     public function __isset($key)
