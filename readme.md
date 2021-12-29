@@ -1,6 +1,6 @@
 ## Xofttion Kernel
 
-Librería que contiene funcionalidades para complementar las otras librerias de Xofttion.
+Librería de Xofttion con funcionalidades estandar para complementar las otras librerias.
 
 ## Instalación
 
