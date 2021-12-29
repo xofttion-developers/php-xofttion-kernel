@@ -8,20 +8,11 @@ use Xofttion\Kernel\Contracts\IJson;
 
 class Json implements IJson
 {
-
-    // Atributos de la clase Json
-
-    /**
-     *
-     * @var array 
-     */
-    protected $json = [];
-
-    // Métodos sobrescritos de la interfaz IJson
+    // Métodos de la clase Json
 
     public function isEmpty(): bool
     {
-        return !($this->count() > 0);
+        return $this->count() == 0;
     }
 
     public function count(): int
@@ -40,8 +31,7 @@ class Json implements IJson
             $newValue = $this->getValue($key) + $value;
 
             $this->attach($key, $newValue);
-        }
-        else {
+        } else {
             $this->attach($key, $value);
         }
     }
@@ -53,7 +43,11 @@ class Json implements IJson
 
     public function getValue(string $key)
     {
-        return !$this->contains($key) ? null : $this->json[$key];
+        if (!$this->contains($key)) {
+            return null;
+        }
+
+        return $this->json[$key];
     }
 
     public function values(): array
@@ -75,7 +69,7 @@ class Json implements IJson
 
     public function toArray(): array
     {
-        $array = []; // Array de valores
+        $array = [];
 
         foreach ($this->json as $value) {
             $array[] = $value;
