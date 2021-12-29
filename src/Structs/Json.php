@@ -2,89 +2,178 @@
 
 namespace Xofttion\Kernel\Structs;
 
-use Traversable;
-use ArrayIterator;
+use DomainException;
 use Xofttion\Kernel\Contracts\IJson;
 
 class Json implements IJson
 {
-    // Métodos de la clase Json
+    // Atributos de la clase Json
 
-    public function isEmpty(): bool
+    private $data = [];
+
+    // Constructor de la clase Json
+
+    public function __construct(?array $data = null)
     {
-        return $this->count() == 0;
-    }
-
-    public function count(): int
-    {
-        return count(array_keys($this->json));
-    }
-
-    public function attach(string $key, $value): void
-    {
-        $this->json[$key] = $value;
-    }
-
-    public function sum(string $key, float $value): void
-    {
-        if ($this->contains($key)) {
-            $newValue = $this->getValue($key) + $value;
-
-            $this->attach($key, $newValue);
-        } else {
-            $this->attach($key, $value);
+        if (is_defined($data)) {
+            $this->map($data);
         }
     }
 
-    public function contains(string $key): bool
-    {
-        return array_key_exists($key, $this->json);
-    }
+    // Métodos sobrescritos de la interfaz IJson
 
-    public function getValue(string $key)
+    public function map(array $data): bool
     {
-        if (!$this->contains($key)) {
-            return null;
+        if (!is_array_json($data)) {
+            return false;
         }
 
-        return $this->json[$key];
-    }
+        $keys = array_keys($data);
 
-    public function values(): array
-    {
-        return $this->json;
-    }
-
-    public function detach(string $key): void
-    {
-        if ($this->contains($key)) {
-            unset($this->json[$key]);
+        foreach ($keys as $key) {
+            $this[$key] = static::getValue($data[$key]);
         }
-    }
 
-    public function clear(): void
-    {
-        $this->json = array();
+        return true;
     }
 
     public function toArray(): array
     {
+        return $this->jsonSerialize();
+    }
+
+    // Métodos sobrescritos de la interfaz JsonSerializable
+
+    public function jsonSerialize()
+    {
+        $keys = array_keys($this->data);
+
+        $json = [];
+
+        foreach ($keys as $key) {
+            $json[$key] = static::jsonToValue($this->data[$key]);
+        }
+
+        return $json;
+    }
+
+    // Métodos sobrescritos de la interfaz ArrayAccess
+
+    public function offsetExists($offset): bool
+    {
+        return isset($this->data[$offset]);
+    }
+
+    public function offsetGet($offset)
+    {
+        if ($this->offsetExists($offset)) {
+            return $this->data[$offset];
+        }
+
+        return null;
+    }
+
+    public function offsetSet($offset, $value): void
+    {
+        if (is_null($offset)) {
+            $this->data[] = $value;
+        } else {
+            $this->data[$offset] = $value;
+        }
+    }
+
+    public function offsetUnset($offset): void
+    {
+        if ($this->offsetExists($offset)) {
+            unset($this->data[$offset]);
+        }
+    }
+
+    // Métodos mágicos sobrescritos de PHP
+
+    public function &__get($key)
+    {
+        return $this->data[$key];
+    }
+
+    public function __set($key, $value)
+    {
+        $this->data[$key] = $value;
+    }
+
+    public function __isset($key)
+    {
+        return isset($this->data[$key]);
+    }
+
+    public function __unset($key)
+    {
+        unset($this->data[$key]);
+    }
+
+    public function __toString()
+    {
+        return json_encode($this->jsonSerialize());
+    }
+
+    // Métodos estáticos de la clase Json
+
+    public static function array(array $data): array
+    {
+        if (is_array_json($data)) {
+            throw new DomainException('An array is expected to be received');
+        }
+
+        return static::getValueArray($data);
+    }
+
+    // Métodos estáticos operacionales de la clase Json
+
+    private static function getValue($data)
+    {
+        if (is_array($data)) {
+            if (!is_array_json($data)) {
+                return static::getValueArray($data);
+            }
+
+            return new static($data);
+        }
+
+        return $data;
+    }
+
+    private static function getValueArray($data)
+    {
         $array = [];
 
-        foreach ($this->json as $value) {
-            $array[] = $value;
+        foreach ($data as $element) {
+            $array[] = static::getValue($element);
         }
 
         return $array;
     }
 
-    public function getIterator(): Traversable
+    private static function jsonToValue($value)
     {
-        return new ArrayIterator($this->json);
+        if ($value instanceof IJson) {
+            return $value->toArray();
+        }
+
+        if (is_array($value)) {
+            return static::jsonToArray($value);
+        }
+
+        return $value;
     }
 
-    public function jsonSerialize()
+    private static function jsonToArray(array $data): array
     {
-        return $this->json;
+        $array = [];
+
+        foreach ($data as $element) {
+            $array[] = static::jsonToValue($element);
+        }
+
+        return $array;
     }
 }
