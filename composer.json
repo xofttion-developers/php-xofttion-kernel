@@ -2,11 +2,16 @@
     "name": "xofttion/kernel",
     "type": "library",
     "license": "MIT",
-    "description": "Librería que contiene métodos para complementar las funciones de las otras librerias de Xofttion",
+    "description": "Librería de Xofttion con funcionalidades estandar para complementar las otras librerias",
+    "keywords": [
+        "xofttion",
+        "kernel"
+    ],
     "authors": [
         {
             "name": "Daniel Andres Castillo Pedroza",
-            "email": "ing.dacastillop@gmail.com"
+            "email": "ing.dacastillop@gmail.com",
+            "role": "owner"
         }
     ],
     "minimum-stability": "dev",
