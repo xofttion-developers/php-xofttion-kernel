@@ -26,7 +26,7 @@ class Json implements IJson
 
     // Métodos de la clase Json
 
-    private function map(array $data): bool
+    protected function map(array $data): bool
     {
         if (!is_array_json($data)) {
             return false;
