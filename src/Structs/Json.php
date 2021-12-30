@@ -137,7 +137,7 @@ class Json implements IJson
 
     // Métodos estáticos operacionales de la clase Json
 
-    private static function getValue($data)
+    protected static function getValue($data)
     {
         if (is_array($data)) {
             if (!is_array_json($data)) {
@@ -150,7 +150,7 @@ class Json implements IJson
         return $data;
     }
 
-    private static function getValueArray($data)
+    protected static function getValueArray($data)
     {
         $array = [];
 
@@ -161,7 +161,7 @@ class Json implements IJson
         return $array;
     }
 
-    private static function jsonToValue($value)
+    protected static function jsonToValue($value)
     {
         if ($value instanceof IJson) {
             return $value->toArray();
@@ -174,7 +174,7 @@ class Json implements IJson
         return $value;
     }
 
-    private static function jsonToArray(array $data): array
+    protected static function jsonToArray(array $data): array
     {
         $array = [];
 
