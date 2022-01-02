@@ -9,9 +9,9 @@ class Json implements IJson
 {
     // Atributos de la clase Json
 
-    private $data = [];
+    private array $data = [];
 
-    private $readonly;
+    private bool $readonly;
 
     // Constructor de la clase Json
 

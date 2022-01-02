@@ -6,11 +6,11 @@ class Stack
 {
     // Atributos de la clase Stack
 
-    private $first;
+    private Node $first;
 
-    private $last;
+    private Node $last;
 
-    private $size = 0;
+    private int $size = 0;
 
     // Métodos de la clase Stack
 
