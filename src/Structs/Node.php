@@ -8,9 +8,9 @@ class Node
 
     private $element;
 
-    private $next;
+    private Node $next;
 
-    private $previous;
+    private Node $previous;
 
     // Constructor de la clase Node
 

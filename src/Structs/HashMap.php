@@ -10,7 +10,7 @@ class HashMap implements IHashMap
 {
     // Atributos de la interfaz HashMap
 
-    private $data;
+    private array $data;
 
     // Constructor de la interfaz HashMap
 

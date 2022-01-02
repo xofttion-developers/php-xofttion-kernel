@@ -6,11 +6,11 @@ class Queque
 {
     // Atributos de la clase Queque
 
-    private $first;
+    private Node $first;
 
-    private $last;
+    private Node $last;
 
-    private $size = 0;
+    private int $size = 0;
 
     // Métodos de la clase Queque
 
