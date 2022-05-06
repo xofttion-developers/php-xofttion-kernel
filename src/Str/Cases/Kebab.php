@@ -4,8 +4,6 @@ namespace Xofttion\Kernel\Str\Cases;
 
 class Kebab
 {
-    // Métodos estáticos de la clase Kebab
-
     public static function toSnake(string $strKebab): string
     {
         return str_replace(['-'], '_', $strKebab);

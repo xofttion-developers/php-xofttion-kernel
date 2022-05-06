@@ -7,13 +7,9 @@ use Xofttion\Kernel\Contracts\IJson;
 
 class Json implements IJson
 {
-    // Atributos de la clase Json
-
     private array $data = [];
 
     private bool $readonly;
-
-    // Constructor de la clase Json
 
     public function __construct(?array $data = null, bool $readonly = true)
     {
@@ -23,8 +19,6 @@ class Json implements IJson
             $this->map($data);
         }
     }
-
-    // Métodos de la clase Json
 
     protected function map(array $data): bool
     {
@@ -41,14 +35,10 @@ class Json implements IJson
         return true;
     }
 
-    // Métodos sobrescritos de la interfaz IJson
-
     public function toArray(): array
     {
         return $this->jsonSerialize();
     }
-
-    // Métodos sobrescritos de la interfaz JsonSerializable
 
     public function jsonSerialize()
     {
@@ -62,8 +52,6 @@ class Json implements IJson
 
         return $json;
     }
-
-    // Métodos sobrescritos de la interfaz ArrayAccess
 
     public function offsetExists($offset): bool
     {
@@ -95,8 +83,6 @@ class Json implements IJson
         }
     }
 
-    // Métodos mágicos sobrescritos de PHP
-
     public function &__get($key)
     {
         return $this->data[$key];
@@ -124,8 +110,6 @@ class Json implements IJson
         return json_encode($this->jsonSerialize());
     }
 
-    // Métodos estáticos de la clase Json
-
     public static function array(array $data): array
     {
         if (is_array_json($data)) {
@@ -134,8 +118,6 @@ class Json implements IJson
 
         return static::getValueArray($data);
     }
-
-    // Métodos estáticos operacionales de la clase Json
 
     protected static function getValue($data)
     {

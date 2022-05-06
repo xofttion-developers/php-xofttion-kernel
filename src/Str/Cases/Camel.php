@@ -4,8 +4,6 @@ namespace Xofttion\Kernel\Str\Cases;
 
 class Camel
 {
-    // Métodos estáticos de la clase Camel
-
     public static function toSnake(string $strCamel): string
     {
         return static::replaceUppers($strCamel, '_');

@@ -8,8 +8,6 @@ use JsonSerializable;
 
 interface IHashMap extends IteratorAggregate, Countable, JsonSerializable
 {
-    // Métodos de la interfaz IHashMap
-
     public function isEmpty(): bool;
 
     public function attach(string $key, $value): void;

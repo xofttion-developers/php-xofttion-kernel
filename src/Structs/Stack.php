@@ -4,27 +4,23 @@ namespace Xofttion\Kernel\Structs;
 
 class Stack
 {
-    // Atributos de la clase Stack
-
-    private Node $first;
-
-    private Node $last;
-
     private int $size = 0;
 
-    // Métodos de la clase Stack
+    private Node $head;
+
+    private Node $tail;
 
     public function push($element): void
     {
         $newNode = new Node($element);
 
-        if (is_defined($this->last)) {
-            $newNode->setPrevious($this->last);
+        if (is_defined($this->tail)) {
+            $newNode->setPrevious($this->tail);
         } else {
-            $this->first = $newNode;
+            $this->head = $newNode;
         }
 
-        $this->last = $newNode;
+        $this->tail = $newNode;
 
         $this->size++;
     }
@@ -41,10 +37,10 @@ class Stack
 
     public function pop()
     {
-        if (is_defined($this->last)) {
-            $element = $this->last->getElement();
+        if (is_defined($this->tail)) {
+            $element = $this->tail->getElement();
 
-            $this->last = $this->last->getPrevious();
+            $this->tail = $this->tail->getPrevious();
 
             $this->size--;
 
@@ -54,21 +50,21 @@ class Stack
         return null;
     }
 
-    public function first()
+    public function head()
     {
-        if (is_null($this->first)) {
+        if (is_null($this->head)) {
             return null;
         }
 
-        return $this->first->getElement();
+        return $this->head->getElement();
     }
 
-    public function last()
+    public function tail()
     {
-        if (is_null($this->last)) {
+        if (is_null($this->tail)) {
             return null;
         }
 
-        return $this->last->getElement();
+        return $this->tail->getElement();
     }
 }

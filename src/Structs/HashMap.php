@@ -8,18 +8,12 @@ use Xofttion\Kernel\Contracts\IHashMap;
 
 class HashMap implements IHashMap
 {
-    // Atributos de la interfaz HashMap
-
     private array $data;
-
-    // Constructor de la interfaz HashMap
 
     public function __construct()
     {
         $this->data = [];
     }
-
-    // Métodos sobrescritos de la interfaz IHashMap
 
     public function isEmpty(): bool
     {
