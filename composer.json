@@ -2,7 +2,7 @@
   "name": "xofttion/kernel",
   "type": "library",
   "license": "MIT",
-  "description": "Librería de Xofttion con funcionalidades estandar para complementar las otras librerias",
+  "description": "Package kernel of Xofttion",
   "keywords": [
     "xofttion",
     "kernel"
@@ -16,7 +16,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^7.4.0"
+    "php": "^7.3"
   },
   "autoload": {
     "psr-4": {
