@@ -6,10 +6,12 @@ use ReflectionClass;
 
 class ReflectiveClass
 {
-    // Métodos de la clase ReflectiveClass
-
-    public function setProperty($object, string $propertyName, $value, ?ReflectionClass $reflection = null): bool
-    {
+    public function setProperty(
+        $object,
+        string $propertyName,
+        $value,
+        ?ReflectionClass $reflection = null
+    ): bool {
         if (is_null($reflection)) {
             $reflection = new ReflectionClass($object);
         }
@@ -29,8 +31,12 @@ class ReflectiveClass
         return true;
     }
 
-    public function setMethod($object, string $methodName, $value, ?ReflectionClass $reflection = null): bool
-    {
+    public function setMethod(
+        $object,
+        string $methodName,
+        $value,
+        ?ReflectionClass $reflection = null
+    ): bool {
         if (is_null($reflection)) {
             $reflection = new ReflectionClass($object);
         }
@@ -50,8 +56,11 @@ class ReflectiveClass
         return true;
     }
 
-    public function getProperty($object, string $propertyName, ?ReflectionClass $reflection = null)
-    {
+    public function getProperty(
+        $object,
+        string $propertyName,
+        ?ReflectionClass $reflection = null
+    ) {
         if (is_null($reflection)) {
             $reflection = new ReflectionClass($object);
         }
@@ -69,8 +78,11 @@ class ReflectiveClass
         return $propertyAccessor->getValue($object);
     }
 
-    public function getMethod($object, string $methodName, ?ReflectionClass $reflection = null)
-    {
+    public function getMethod(
+        $object,
+        string $methodName,
+        ?ReflectionClass $reflection = null
+    ) {
         if (is_null($reflection)) {
             $reflection = new ReflectionClass($object);
         }

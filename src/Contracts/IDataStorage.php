@@ -4,8 +4,6 @@ namespace Xofttion\Kernel\Contracts;
 
 interface IDataStorage
 {
-    // Métodos de la interfaz IDataStorage
-
     public function isEmpty(): bool;
 
     public function count();

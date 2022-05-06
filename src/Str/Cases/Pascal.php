@@ -4,8 +4,6 @@ namespace Xofttion\Kernel\Str\Cases;
 
 class Pascal
 {
-    // Métodos estáticos de la clase Pascal
-
     public static function toSnake(string $strPascal): string
     {
         return static::replaceUppers($strPascal, '_');

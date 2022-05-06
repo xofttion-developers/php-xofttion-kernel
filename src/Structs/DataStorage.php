@@ -7,8 +7,6 @@ use Xofttion\Kernel\Contracts\IDataStorage;
 
 class DataStorage extends SplObjectStorage implements IDataStorage
 {
-    // Métodos de la clase DataStorage
-
     public function isEmpty(): bool
     {
         return $this->count() == 0;

@@ -4,8 +4,6 @@ namespace Xofttion\Kernel\Str\Cases;
 
 class Snake
 {
-    // Métodos estáticos de la clase Snake
-
     public static function toCamel(string $strSnake): string
     {
         $result = static::toPascal($strSnake);

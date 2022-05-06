@@ -4,27 +4,23 @@ namespace Xofttion\Kernel\Structs;
 
 class Queque
 {
-    // Atributos de la clase Queque
-
-    private Node $first;
-
-    private Node $last;
-
     private int $size = 0;
 
-    // Métodos de la clase Queque
+    private Node $head;
+
+    private Node $tail;
 
     public function enqueue($element): void
     {
         $newNode = new Node($element);
 
-        if (is_null($this->first)) {
-            $this->first = $newNode;
+        if (is_null($this->head)) {
+            $this->head = $newNode;
         } else {
-            $this->last->setNext($newNode);
+            $this->tail->setNext($newNode);
         }
 
-        $this->last = $newNode;
+        $this->tail = $newNode;
 
         $this->size++;
     }
@@ -41,10 +37,10 @@ class Queque
 
     public function dequeue()
     {
-        if (is_defined($this->first)) {
-            $element = $this->first->getElement();
+        if (is_defined($this->head)) {
+            $element = $this->head->getElement();
 
-            $this->first = $this->first->getNext();
+            $this->head = $this->head->getNext();
 
             $this->size--;
 
@@ -54,21 +50,21 @@ class Queque
         return null;
     }
 
-    public function first()
+    public function head()
     {
-        if (is_null($this->first)) {
+        if (is_null($this->head)) {
             return null;
         }
 
-        return $this->first->getElement();
+        return $this->head->getElement();
     }
 
-    public function last()
+    public function tail()
     {
-        if (is_null($this->last)) {
+        if (is_null($this->tail)) {
             return null;
         }
 
-        return $this->last->getElement();
+        return $this->tail->getElement();
     }
 }

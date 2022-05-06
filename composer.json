@@ -1,27 +1,29 @@
 {
-    "name": "xofttion/kernel",
-    "type": "library",
-    "license": "MIT",
-    "description": "Librería de Xofttion con funcionalidades estandar para complementar las otras librerias",
-    "keywords": [
-        "xofttion",
-        "kernel"
-    ],
-    "authors": [
-        {
-            "name": "Daniel Andres Castillo Pedroza",
-            "email": "ing.dacastillop@gmail.com",
-            "role": "owner"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {},
-    "autoload": {
-        "psr-4": {
-            "Xofttion\\Kernel\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+  "name": "xofttion/kernel",
+  "type": "library",
+  "license": "MIT",
+  "description": "Librería de Xofttion con funcionalidades estandar para complementar las otras librerias",
+  "keywords": [
+    "xofttion",
+    "kernel"
+  ],
+  "authors": [
+    {
+      "name": "Daniel Andres Castillo Pedroza",
+      "email": "ing.dacastillop@gmail.com",
+      "role": "owner"
     }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xofttion\\Kernel\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  }
 }
